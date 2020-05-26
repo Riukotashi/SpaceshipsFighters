@@ -8,25 +8,33 @@ public class Game : MonoBehaviour
     public GameObject player2;
     string winner;
     string loser;
-    void Start()
-    {
-        
-    }
+    private int end = 0;
 
     void Update()
     {
+        if(end == 0)
+        {
+            if (player1.activeSelf == false)
+            {
+                winner = player2.name;
+                loser = player1.name;
+                Debug.Log("winner is" + winner);
+                end++;
+            }
+            if (player2.activeSelf == false)
+            {
 
-        if (player1.activeSelf == true)
-        {
-            Debug.Log("Player1 Win");
-        }
-        if (player1.activeSelf == true)
-        {
-            Debug.Log("Player2 Win");
+                winner = player1.name;
+                loser = player2.name;
+                Debug.Log("winner is" + winner);
+                end++;
+            }
         }
     }
 
-    void Finish()
+    void SaveScore()
     {
+        
+
     }
 }

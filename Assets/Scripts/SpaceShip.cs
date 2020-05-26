@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpaceShip : MonoBehaviour
 {
     int delay = 0;
+    int minDelay = 200;
     GameObject a;
     public GameObject bullet;
     Rigidbody2D rb;
@@ -46,7 +47,7 @@ public class SpaceShip : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, speed);
         }
 
-        if (Input.GetKey(ShotKey) && delay > 400)
+        if (Input.GetKey(ShotKey) && delay > minDelay)
         {
             Shoot();
         }
@@ -63,6 +64,7 @@ public class SpaceShip : MonoBehaviour
     void Die()
     {
         gameObject.SetActive(false);
+        /*Destroy(gameObject);*/
     }
 
     public void TakeDamage(int damage)
