@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 using Mono.Data.Sqlite;
+using TMPro;
 
 
 
@@ -10,9 +11,23 @@ public class Game : MonoBehaviour
 {
     public GameObject player1;
     public GameObject player2;
+    public GameObject endScreen;
+    public TextMeshProUGUI winnerText;
     string winner;
     string loser;
     private int end = 0;
+
+    void Start()
+    {
+        winnerText.text = null;
+    }
+
+    void PrintEndMenu(string winner)
+    {
+        winnerText.text = winner + "Win";
+        endScreen.SetActive(true);
+        Time.timeScale = 0f;
+    }
 
     void Update()
     {
@@ -20,50 +35,26 @@ public class Game : MonoBehaviour
         {
             if (player1.activeSelf == false)
             {
-                winner = player2.name;
-                loser = player1.name;
-                Debug.Log("winner is" + winner);
-                SaveScore(winner, loser);
-                end++;
+                EndGame(player2.name, player1.name);
+
             }
             if (player2.activeSelf == false)
             {
-
-                winner = player1.name;
-                loser = player2.name;
-                Debug.Log("winner is" + winner);
-                SaveScore(winner, loser);
-                end++;
+                EndGame(player1.name, player2.name);
             }
         }
     }
 
+    void EndGame(string _winner, string _loser)
+    {
+        winner = _winner;
+        loser = _loser;
+        DBConnection.InsertScore(_winner, _loser);
+        PrintEndMenu(winner);
+        end++;
+    }
+
     void SaveScore(string winner, string loser)
     {
-        // Create database
-        string connection = "URI=file:" + Application.persistentDataPath + "/SpaceshipsFigthersScore";
-        Debug.Log("path de la bdd sqlite " + Application.persistentDataPath);
-
-        // Open connection
-        IDbConnection dbcon = new SqliteConnection(connection);
-        dbcon.Open();
-
-        // Create table
-        IDbCommand dbcmd;
-        dbcmd = dbcon.CreateCommand();
-        string q_createTable = "CREATE TABLE IF NOT EXISTS gameHisto (id INTEGER PRIMARY KEY, winner TEXT, loser TEXT)";
-
-        dbcmd.CommandText = q_createTable;
-        dbcmd.ExecuteReader();
-
-        // Insert values in table
-        IDbCommand insert = dbcon.CreateCommand();
-        insert.CommandText = "INSERT INTO gameHisto (winner,loser) VALUES (@winner, @loser)";
-        insert.Parameters.Add(new SqliteParameter("@winner", winner));
-        insert.Parameters.Add(new SqliteParameter("@loser", loser));
-        insert.ExecuteNonQuery();
-        dbcon.Close();
-
-
     }
 }
