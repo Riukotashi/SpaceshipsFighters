@@ -8,8 +8,19 @@ using System.IO;
 
 public static class DBConnection
 {
-    static string pathFile = Application.persistentDataPath + "/SpaceshipsFigthersScore";
-    static string dbPath = "URI=file:" + pathFile;
+    private static string pathFile = Application.persistentDataPath + "/SpaceshipsFigthersScore";
+    private static string dbPath = "URI=file:" + pathFile;
+
+    static private void CreateSchema()
+    {
+        IDbConnection dbcon = new SqliteConnection(dbPath);
+        dbcon.Open();
+
+        IDbCommand dbcmd = dbcon.CreateCommand();
+        dbcmd.CommandText = "CREATE TABLE IF NOT EXISTS gameHisto (id INTEGER PRIMARY KEY, winner TEXT, loser TEXT)";
+        dbcmd.ExecuteReader();
+        dbcon.Close();
+    }
 
     static public void InsertScore(string winner, string loser)
     {
@@ -21,11 +32,11 @@ public static class DBConnection
         IDbConnection dbcon = new SqliteConnection(dbPath);
         dbcon.Open();
 
-        IDbCommand insert = dbcon.CreateCommand();
-        insert.CommandText = "INSERT INTO gameHisto (winner,loser) VALUES (@winner, @loser)";
-        insert.Parameters.Add(new SqliteParameter("@winner", winner));
-        insert.Parameters.Add(new SqliteParameter("@loser", loser));
-        insert.ExecuteNonQuery();
+        IDbCommand dbcmd = dbcon.CreateCommand();
+        dbcmd.CommandText = "INSERT INTO gameHisto (winner,loser) VALUES (@winner, @loser)";
+        dbcmd.Parameters.Add(new SqliteParameter("@winner", winner));
+        dbcmd.Parameters.Add(new SqliteParameter("@loser", loser));
+        dbcmd.ExecuteNonQuery();
         dbcon.Close();
 
 
@@ -41,12 +52,11 @@ public static class DBConnection
         IDbConnection dbcon = new SqliteConnection(dbPath);
         dbcon.Open();
 
-        IDbCommand select = dbcon.CreateCommand();
-        select.CommandText = "SELECT count(id), winner FROM gameHisto GROUP BY winner;";
-        IDataReader reader = select.ExecuteReader();
+        IDbCommand dbcmd = dbcon.CreateCommand();
+        dbcmd.CommandText = "SELECT count(id) as nb, winner FROM gameHisto GROUP BY winner ORDER BY nb DESC LIMIT 5;";
+        IDataReader reader = dbcmd.ExecuteReader();
 
         List<PlayerScore> playerScores = new List<PlayerScore>();
-
         while (reader.Read())
         {
             PlayerScore playerScore = new PlayerScore();
@@ -58,19 +68,5 @@ public static class DBConnection
         reader.Close();
         dbcon.Close();
         return playerScores;
-    }
-
-
-    static void CreateSchema()
-    {
-        IDbConnection dbcon = new SqliteConnection(dbPath);
-        dbcon.Open();
-
-        IDbCommand dbcmd = dbcon.CreateCommand();
-        string q_createTable = "CREATE TABLE IF NOT EXISTS gameHisto (id INTEGER PRIMARY KEY, winner TEXT, loser TEXT)";
-
-        dbcmd.CommandText = q_createTable;
-        dbcmd.ExecuteReader();
-        dbcon.Close();
     }
 }

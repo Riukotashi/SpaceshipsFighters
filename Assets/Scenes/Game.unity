@@ -153,15 +153,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e0dd3dc451cb247a2ec9109dedee0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 1690529395121821857, guid: ee2b8c375c4840142b8655cbaa8f3ec6, type: 3}
-  speed: 5
-  left: 276
-  right: 275
-  down: 274
-  up: 273
-  ShotKey: 324
+  left: 106
+  right: 108
+  down: 107
+  up: 105
+  ShotKey: 305
   healthBar: {fileID: 1697181392}
-  maxHealth: 100
+  bullet: {fileID: 1690529395121821857, guid: ee2b8c375c4840142b8655cbaa8f3ec6, type: 3}
 --- !u!60 &42423021
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -365,8 +363,8 @@ Canvas:
   m_GameObject: {fileID: 77526905}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -374,7 +372,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1275012993
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &77526909
@@ -4488,7 +4486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 774006769}
   m_Layer: 12
-  m_Name: a
+  m_Name: ShotPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4679,15 +4677,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e0dd3dc451cb247a2ec9109dedee0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 5374297886818708572, guid: 710ab086e6179784493821c028a1e448, type: 3}
-  speed: 5
   left: 113
   right: 100
   down: 115
   up: 122
   ShotKey: 32
   healthBar: {fileID: 1405286307}
-  maxHealth: 100
+  bullet: {fileID: 5374297886818708572, guid: 710ab086e6179784493821c028a1e448, type: 3}
 --- !u!60 &833041004
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5260,7 +5256,7 @@ GameObject:
   - component: {fileID: 1241034620}
   - component: {fileID: 1241034619}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5278,8 +5274,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64079949660202479bd0dd7f1364806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1: {fileID: 833041000}
-  player2: {fileID: 42423019}
   endScreen: {fileID: 213018530}
   winnerText: {fileID: 188220353}
 --- !u!4 &1241034620
@@ -5335,7 +5329,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -430, y: -297}
+  m_AnchoredPosition: {x: -425, y: -363}
   m_SizeDelta: {x: 222, y: 39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1405286306
@@ -5456,7 +5450,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9499998, y: 10.482155}
+  m_Size: {x: 0.9499998, y: 11.67}
   m_EdgeRadius: 0
 --- !u!1 &1627103463
 GameObject:
@@ -5468,7 +5462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1627103464}
   m_Layer: 12
-  m_Name: a
+  m_Name: ShotPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5599,7 +5593,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 430, y: -297}
+  m_AnchoredPosition: {x: 435, y: -363}
   m_SizeDelta: {x: 222, y: 39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1697181392
@@ -5744,7 +5738,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.8881226, y: -4.9459386}
+  m_Offset: {x: -3.1, y: -3.93}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5755,7 +5749,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20.189194, y: 1.1118774}
+  m_Size: {x: 20.42, y: 0.99}
   m_EdgeRadius: 0
 --- !u!61 &1783456728
 BoxCollider2D:

@@ -9,34 +9,35 @@ using TMPro;
 
 public class Game : MonoBehaviour
 {
-    public GameObject player1;
-    public GameObject player2;
     public GameObject endScreen;
     public TextMeshProUGUI winnerText;
-    string winner;
-    string loser;
+    private GameObject player1;
+    private GameObject player2;
+    private string winner;
+    private string loser;
     private int end = 0;
 
-    void Start()
+    private void Awake()
     {
         winnerText.text = null;
+        player1 = GameObject.Find("Player1");
+        player2 = GameObject.Find("Player2");
     }
 
-    void PrintEndMenu(string winner)
+    private void PrintEndMenu(string winner)
     {
         winnerText.text = winner + "Win";
         endScreen.SetActive(true);
         Time.timeScale = 0f;
     }
 
-    void Update()
+    private void Update()
     {
         if(end == 0)
         {
             if (player1.activeSelf == false)
             {
                 EndGame(player2.name, player1.name);
-
             }
             if (player2.activeSelf == false)
             {
@@ -45,16 +46,12 @@ public class Game : MonoBehaviour
         }
     }
 
-    void EndGame(string _winner, string _loser)
+    private void EndGame(string _winner, string _loser)
     {
         winner = _winner;
         loser = _loser;
         DBConnection.InsertScore(_winner, _loser);
         PrintEndMenu(winner);
         end++;
-    }
-
-    void SaveScore(string winner, string loser)
-    {
     }
 }

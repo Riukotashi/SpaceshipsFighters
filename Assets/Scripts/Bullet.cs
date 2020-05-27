@@ -3,21 +3,22 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public int dir;
-    Rigidbody2D rb;
-    int damage = 10;
+    public  int dir;
+    private Rigidbody2D rb;
+    private int damage = 10;
+    private int bulletSpeed = 15;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        rb.velocity = new Vector2(15 * dir, 0);
+        rb.velocity = new Vector2(bulletSpeed * dir, 0);
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Player")
         {
@@ -29,6 +30,5 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 }

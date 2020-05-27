@@ -4,67 +4,65 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
 {
-    int delay = 0;
-    int minDelay = 200;
-    GameObject a;
-    public GameObject bullet;
-    Rigidbody2D rb;
-    public float speed;
     public KeyCode left;
     public KeyCode right;
     public KeyCode down;
     public KeyCode up;
     public KeyCode ShotKey;
     public HealthBar healthBar;
-    public int maxHealth = 100;
-    int currentHealth;
+    public GameObject bullet;
+    private int currentHealth;
+    private int maxHealth = 100;
+    private float speedMovement = 5;
+    private bool canShoot = true;
+    private float shotDelay = 0.5F;
+    private GameObject ShotPosition;
+    private Rigidbody2D rb;
 
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        a = transform.Find("a").gameObject;
+        ShotPosition = transform.Find("ShotPosition").gameObject;
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    void Update()
+    private void Update()
     {
         if(Input.GetKey(left))
         {
-            rb.velocity = new Vector2(-speed, rb.velocity.y);
+            rb.velocity = new Vector2(-speedMovement, rb.velocity.y);
         }
         if (Input.GetKey(right))
         {
-            rb.velocity = new Vector2(speed, rb.velocity.y);
+            rb.velocity = new Vector2(speedMovement, rb.velocity.y);
         }
         if (Input.GetKey(down))
         {
-            rb.velocity = new Vector2(rb.velocity.x, -speed);
+            rb.velocity = new Vector2(rb.velocity.x, -speedMovement);
         }
         if (Input.GetKey(up))
         {
-            rb.velocity = new Vector2(rb.velocity.x, speed);
+            rb.velocity = new Vector2(rb.velocity.x, speedMovement);
         }
 
-        if (Input.GetKey(ShotKey) && delay > minDelay)
+        if (Input.GetKey(ShotKey) && canShoot == true)
         {
             Shoot();
         }
-
-        delay++;
     }
 
-    void Shoot()
+    private void Shoot()
     {
-        delay = 0;
-        Instantiate(bullet, a.transform.position, bullet.transform.rotation);
+        Instantiate(bullet, ShotPosition.transform.position, bullet.transform.rotation);
+        canShoot = false;
+        StartCoroutine(ShootDelay());
     }
-    
-    void Die()
+
+    private void Die()
     {
         gameObject.SetActive(false);
-        /*Destroy(gameObject);*/
     }
 
     public void TakeDamage(int damage)
@@ -75,5 +73,11 @@ public class SpaceShip : MonoBehaviour
         {
             Die();
         }
+    }
+
+    IEnumerator ShootDelay()
+    {
+        yield return new WaitForSeconds(shotDelay);
+        canShoot = true;
     }
 }
