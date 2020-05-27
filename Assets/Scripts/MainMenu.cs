@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : Menu
 {
-
-    public void PlayGame ()
+    public void Score()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
 
-    public void QuitGame()
-    {
-        Application.Quit();
+        List<PlayerScore> playerScores = DBConnection.GetScore();
+        foreach (PlayerScore playerScore in playerScores)
+        {
+            Debug.Log(playerScore.name);
+        }
     }
 }
