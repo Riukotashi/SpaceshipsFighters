@@ -26,7 +26,7 @@ public class Game : MonoBehaviour
 
     private void PrintEndMenu(string winner)
     {
-        winnerText.text = winner + "Win";
+        winnerText.text = winner + " a Gagné";
         endScreen.SetActive(true);
         Time.timeScale = 0f;
     }
